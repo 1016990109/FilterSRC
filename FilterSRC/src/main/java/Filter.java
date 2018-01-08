@@ -5,8 +5,8 @@ public class Filter {
         return file.getName().equals("src");
     }
 
-    public void filter() {
-        File assignmentDirectory = new File("D:/学习/计算系统基础/assignment2");
+    public void filter(String path) {
+        File assignmentDirectory = new File(path);
         File[] submissions = assignmentDirectory.listFiles();
 
         for (File submission: submissions) {
@@ -29,6 +29,7 @@ public class Filter {
             } else {
                 File[] children = file.listFiles();
                 for (File child: children) {
+                    //check whether from mac_os
                     if (!child.getName().equals("__MACOSX")) {
                         File result = getSRCFile(child);
                         if (result != null) {
@@ -151,6 +152,10 @@ public class Filter {
     }
 
     public static void main(String[] args) {
-        new Filter().filter();
+        if (args.length == 0 || !(args[0] instanceof String)) {
+            System.err.println("Please input first argument as the input path like \"D:/learning/assignment5\"");
+            return;
+        }
+        new Filter().filter(args[0]);
     }
 }
